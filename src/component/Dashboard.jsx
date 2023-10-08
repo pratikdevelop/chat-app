@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 import ChatBox from './ChatBox';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import {create_conversation, get_conversation, get_users} from '../apicall/AuthApi';
+import {create_conversation, get_conversation, get_users} from '../services/authservices';
 import { UseGlobalContext } from '../consumer/UserContext';
 import Users from './pages/Users';
 import Heder from './pages/Heder';
