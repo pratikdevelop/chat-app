@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  chat-app:
+    image: node:18
+    container_name: chat-app
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    volumes:
+      - './:/app'
+      - '/app/node_modules'
+    ports:
+      - 3000:3000
+    stdin_open: true
+    environment:
+      - REACT_APP_API_URL=https://chat-app-12xc.onrender.com

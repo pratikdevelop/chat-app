@@ -23,7 +23,7 @@ const ChatBox = (props) => {
     console.log('cirre', currentChat);
     useEffect(() => {
         let isGet = false
-        if (!isGet && aarrivalMessage && currentChat) {
+        if (!isGet && arrivalMessage && currentChat) {
             if (currentChat.members.indexOf(arrivalMessage.senderId) > -1) {
                 setMessages([...messages, arrivalMessage])
             }

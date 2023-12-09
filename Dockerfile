@@ -1,14 +1,10 @@
-FROM node:latest as build-stage
+FROM node:18
 WORKDIR /app
-COPY package.json ./
+COPY package.json ./app
+RUN ls
+RUN ulimit  1024
 RUN npm install --force  
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
 COPY . .
-RUN npm build
-FROM nginx:latest
-
-COPY --from=build-stage /bezkoder-ui/build /usr/share/nginx/html
-EXPOSE 80
-
-CMD nginx -g 'daemon off;'
+RUN npm start

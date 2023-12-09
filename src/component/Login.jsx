@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UseGlobalContext } from "../consumer/UserContext";
 
 import { loginSchema } from "../Schemas";
-import { login } from "../services/AuthApi";
+import { login } from "../services/authservices";
 const Login = () => {
   const {dispatch} = UseGlobalContext();
   const redirect = useNavigate();

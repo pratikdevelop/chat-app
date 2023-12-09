@@ -18,12 +18,9 @@ export const loginSchema = Yup.object({
 })
 
 export const registerationSchema = Yup.object({
-    first_name: Yup.string().min(4).max(25).required('please enter the first name'),
-    last_name: Yup.string().min(4).max(25).required('please enter the last name'),
-    phone: Yup.number().min(10).required('please enter the mobile number'),
-    username: Yup.string().max(20).required('please enter the user name'),
+    name: Yup.string().min(4).max(25).required('please enter your name'),
     email: Yup.string().email().required('please enter the email'),
-    date_of_birth: Yup.date().min(new Date()).required('plase enter your date of birth'),
+    username: Yup.string().max(20).required('please enter the user name'),
     password: Yup.string().min(9, 'Password must be 10 characters long')
         .matches(/[0-9]/, 'Password requires atleast one  a number')
         .matches(/[a-z]/, 'Password requires a lowercase letter')

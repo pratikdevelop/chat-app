@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,14 +14,11 @@ const Signup = () => {
   const { values, errors, handleChange, handleBlur, touched, handleSubmit } =
     useFormik({
       initialValues: {
-        first_name: "",
-        last_name: "",
-        phone: "",
-        username: "",
+        name: "",
         email: "",
+        username: "",
         password: "",
         confirm_password: "",
-        date_of_birth: new Date(),
       },
       validationSchema: registerationSchema,
       onSubmit: (values) => {
@@ -42,50 +40,32 @@ const Signup = () => {
     <>
      <CommonAlert data = {{open:response.open,message:response.message,variant:response.variant}}/>
       <div className="relative flex flex-auto sm:justify-between">
-        <div className="flex items-center py-10 px-6 sm:px-16 sm:w-1/2">
-          <form method="post" className="flex flex-col flex-auto  sm:space-y-4">
-            <div className="mb-3 sm:mb-0 text-center text-xl md:text-3xl lg:text-5xl font-bold">create account in our chat app</div>
-            <Grid container spacing={5}>
-              <Grid item xs={6} sm={6} md={6} lg={6}>
+        <div className="flex items-center py-10 px-6 sm:px-40 sm:w-1/2">
+          <form method="post" className="flex flex-col flex-auto items-center">
+            <div className="mb-3 text-center text-3xl font-bold">Welcome our chat app</div>
+            <Grid container alignItems="center" justifyItems="center" spacing={3}>
+              <Grid item lg={12} xs={12} sm={12} md={12}>
                 <input
-                  className=" w-full p-5 py-4  border-0 outline-0   border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
+                  className=" w-full p-5 py-4  border-0 outline-0 border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
                   placeholder="enter your name"
-                  id="first_name"
-                  type="first_name"
-                  value={values.first_name}
+                  id="name"
+                  type="name"
+                  value={values.name}
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {errors.first_name && touched.first_name ? (
+                {errors.name && touched.name ? (
                   <p className="text-red-600 p-2 font-medium">
-                    {errors.first_name}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </Grid>
-              <Grid item xs={6} sm={6} md={6} lg={6}>
-                <input
-                  className=" w-full p-5 py-4  border-0 outline-0   border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
-                  placeholder="enter your name"
-                  id="last_name"
-                  type="last_name"
-                  value={values.last_name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {errors.last_name && touched.last_name ? (
-                  <p className="text-red-600 p-2 font-medium">
-                    {errors.last_name}
+                    {errors.name}
                   </p>
                 ) : (
                   ""
                 )}
               </Grid>
 
-              <Grid item xs={6} sm={6} md={6} lg={6}>
+              <Grid item lg={12} xs={12} sm={12} md={12}>
                 <input
-                  className=" w-full p-5 py-4  border-0 outline-0   border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
+                  className="block w-full p-5 py-4 border-0 outline-0 border-b-2 border-indigo-900 outline-white shadow-md bg-transparent"
                   placeholder="enter your username"
                   id="username"
                   type="username"
@@ -101,10 +81,10 @@ const Signup = () => {
                   ""
                 )}
               </Grid>
-              <Grid item xs={6} sm={6} md={6} lg={6}>
+              <Grid item lg={12} xs={12} sm={12} md={12}>
                 <input
-                  className=" w-full p-5 py-4  border-0 outline-0   border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
-                  placeholder="enter your name"
+                  className="w-full p-5 py-4 border-0 outline-0 border-b-2 border-indigo-900 outline-white shadow-md bg-transparent"
+                  placeholder="enter your email"
                   id="email"
                   type="email"
                   value={values.email}
@@ -118,10 +98,10 @@ const Signup = () => {
                 )}
               </Grid>
 
-              <Grid item xs={6} sm={6} md={6} lg={6}>
+              <Grid item lg={12} xs={12} sm={12} md={12}>
                 <input
-                  className=" w-full p-5 py-4  border-0 outline-0   border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
-                  placeholder="enter your name"
+                  className="block w-full p-5 py-4 border-0 outline-0 border-b-2 border-indigo-900 outline-white  hadow-md bg-transparent"
+                  placeholder="enter your password"
                   id="password"
                   type={showPassword ? "text" : "password"}
                   value={values.password}
@@ -137,10 +117,10 @@ const Signup = () => {
                   ""
                 )}
               </Grid>
-              <Grid item xs={6} sm={6} md={6} lg={6}>
+              <Grid item lg={12} xs={12} sm={12} md={12}>
                 <input
-                  className=" w-full p-5 py-4  border-0 outline-0   border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
-                  placeholder="enter your name"
+                  className="block w-full p-5 py-4 border-0 outline-0 border-b-2 border-indigo-900 outline-white shadow-md bg-transparent"
+                  placeholder="enter your confirm password"
                   id="confirm_password"
                   type={showPassword ? "text" : "password"}
                   value={values.confirm_password}
@@ -157,46 +137,12 @@ const Signup = () => {
                 )}
               </Grid>
 
-              <Grid item xs={12} sm={6} md={6} lg={6}>
-                <input
-                  className=" w-full p-5 py-4  border-0 outline-0   border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
-                  placeholder="enter your name"
-                  id="phone"
-                  type="phone"
-                  value={values.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {errors.phone && touched.phone ? (
-                  <p className="text-red-600 p-2 font-medium">{errors.phone}</p>
-                ) : (
-                  ""
-                )}
+              <Grid item lg={6} xs={6} flexDirection="row" justifyContent="space-between" alignItems="center">
+              <input label="show password" type="checkbox" name="showPassword" value={showPassword} onChange={()=>setShowPassword(!showPassword)}/> Show password 
               </Grid>
+              <Grid item lg={6} xs={6} flexDirection="row" justifyContent="space-between" alignItems="center">
 
-              <Grid item xs={12} sm={6} md={6} lg={6}>
-                <input
-                  className=" w-full p-5 py-4  border-0 outline-0   border-b-2 border-indigo-900 outline-white  shadow-md bg-transparent"
-                  placeholder="enter your name"
-                  id="date"
-                  type="date"
-                  value={values.date_of_birth}
-                  label="date_of_birth"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-                {errors.date_of_birth && touched.date_of_birth ? (
-                  <p className="text-red-600 p-2 font-medium">
-                    {errors.date_of_birth}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={6} lg={6} flexDirection="row" justifyContent="space-between" alignItems="center">
-              <input label="show password" type="checkbox" name="showPassword" value={showPassword} onChange={()=>setShowPassword(!showPassword)}/>
-              <span className="text-base font-semibold  ml-auto text-dark  my-3">
+              <span className="text-base font-semibold  ml-auto text-dark my-3">
                 already exists your account?
                 <NavLink
                   className="hover:underline text-blue-600 hover:bg-blue-800"
@@ -207,12 +153,11 @@ const Signup = () => {
               </span>
               </Grid>
             </Grid>
-            <div className="flex flex-col items-center w-full space-y-4 ">
-              
-
+            <div className="flex flex-col items-center w-full mt-5">
+  
               <button
                 type="button"
-                className="block px-8 py-4 w-full shadow-md border-2  border-indigo-900 hover:scale-100 hover:border-spacing-12 text-dark font-bold  text-xl"
+                className="block mx-auto px-14 rounded py-2 shadow-md border-2 border-indigo-900 hover:scale-100 hover:border-spacing-12 text-dark font-bold  text-xl"
                 onClick={handleSubmit}
               >
                 create account
@@ -430,7 +375,7 @@ const Signup = () => {
           title="Buy me a beer"
           href="https://www.buymeacoffee.com/scottwindon"
           target="_blank"
-          class="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
+          class="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12" rel="noreferrer"
         >
           <img
             class="object-cover object-center w-full h-full rounded-full"
