@@ -1,0 +1,71 @@
+<div class="relative flex flex-auto h-[100vh] w-full">
+  <mat-drawer-container class="flex h-full w-full">
+    <!-- Sidebar Drawer (Conversations) -->
+    <mat-drawer mode="side" [opened]="leftOpen" class="w-80 p-4 border-r bg-gray-50">
+      <app-header (toggleSidebar)="toggleLeftSidebar()"></app-header>
+      <div class="space-y-2">
+        <div 
+          *ngFor="let conversation of conversations" 
+          class="flex items-center p-3 rounded-lg hover:bg-gray-200 cursor-pointer"
+          [class.bg-gray-100]="selectedConversation?.id === conversation.id"
+          (click)="selectConversation(conversation)"
+        >
+          <app-conversation [conversation]="conversation"></app-conversation>
+        </div>
+      </div>
+    </mat-drawer>
+
+    <!-- Main Chat Area -->
+    <mat-drawer-content class="flex flex-1 flex-col">
+      <app-chat-list 
+        *ngIf="selectedConversation" 
+        [conversation]="selectedConversation" 
+        [messages]="messages" 
+        (messageSent)="sendMessage($event)"
+        (typing)="updateTyping($event)"
+      ></app-chat-list>
+      <div *ngIf="!selectedConversation" class="flex-1 flex items-center justify-center text-gray-500">
+        Select a conversation to start chatting
+      </div>
+    </mat-drawer-content>
+
+    <!-- Users List (Right Sidebar) -->
+    <!-- <mat-drawer mode="side" [opened]="rightOpen" position="end" class="w-64 p-4 border-l bg-gray-50">
+      <app-users 
+        [users]="users" 
+        (userSelected)="startPrivateChat($event)"
+      ></app-users>
+    </mat-drawer> -->
+  </mat-drawer-container>
+
+  <!-- Toggle Buttons -->
+  <button mat-icon-button class="absolute top-4 left-4" (click)="toggleLeftSidebar()" *ngIf="!leftOpen">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <button mat-icon-button class="absolute top-4 right-4" (click)="toggleRightSidebar()" *ngIf="!rightOpen">
+    <mat-icon>people</mat-icon>
+  </button>
+
+  <!-- Dialog for Group Chat Creation -->
+  <ng-template #groupChatDialog>
+    <h2 mat-dialog-title>Create Group Chat</h2>
+    <mat-dialog-content class="space-y-4">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Group Name</mat-label>
+        <input matInput [(ngModel)]="groupName" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Select Initial Members</mat-label>
+        <mat-select [(ngModel)]="selectedMembers" multiple>
+          <mat-option *ngFor="let user of users" [value]="user.id">
+            {{ user.first_name }} {{ user.last_name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeDialog()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="createGroupChat()" [disabled]="!groupName">Create</button>
+    </mat-dialog-actions>
+  </ng-template>
+</div>

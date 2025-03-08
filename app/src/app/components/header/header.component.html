@@ -1,0 +1,49 @@
+<div class="flex flex-auto p-2 items-center justify-between w-full">
+  <!-- User Info -->
+  <div class="flex items-center space-x-2">
+    <img 
+      [src]="user?.profile_image || 'avatar.jpg'" 
+      class="w-10 h-10 rounded-full object-cover" 
+      alt="Profile"
+    >
+    <div class="flex flex-col">
+      <div class="flex items-center space-x-1">
+        <span class="text-xl font-bold">{{ user?.first_name }} {{ user?.last_name }}</span>
+        <mat-icon *ngIf="user?.status === 'online'" class="text-green-500" style="font-size: 12px;">fiber_manual_record</mat-icon>
+      </div>
+      <span class="text-sm text-gray-600">{{ user?.email }}</span>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <div class="flex items-center ml-auto space-x-2">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Open menu"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openNewChat()">New Chat</button>
+      <button mat-menu-item (click)="openNewGroupChat()">New Group Chat</button>
+      <button mat-menu-item (click)="openInviteToGroup()">Invite to Group</button>
+      <button mat-menu-item (click)="openProfile()">Profile</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </div>
+</div>
+
+<!-- Search Bar -->
+<div class="flex items-center justify-start p-2">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Search users or conversations</mat-label>
+    <input
+      matInput
+      [(ngModel)]="searchKey"
+      (ngModelChange)="onSearch()"
+      placeholder="Search users or conversations"
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>

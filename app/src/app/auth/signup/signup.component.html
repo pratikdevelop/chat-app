@@ -1,0 +1,73 @@
+<div class="flex items-center justify-center min-h-screen  ">
+  <div class="flex flex-col p-6 shadow-lg rounded-xl space-y-6 bg-slate-900 w-5/12">
+    <span class="text-3xl font-semibold text-white text-center">Create Chat Account</span>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="space-y-4" enctype="multipart/form-data">
+      
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="first_name" />
+        <mat-error *ngIf="signupForm.get('first_name')?.hasError('required')">First name is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="last_name" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        <mat-error *ngIf="signupForm.get('email')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="signupForm.get('email')?.hasError('email')">Please enter a valid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-error *ngIf="signupForm.get('password')?.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">
+          Password must be at least 8 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Phone Number (Optional)</mat-label>
+        <input matInput type="tel" formControlName="phone" />
+        <mat-error *ngIf="signupForm.get('phone')?.hasError('pattern')">
+          Please enter a valid phone number (e.g., 1234567890)
+        </mat-error>
+      </mat-form-field>
+
+      <!-- File input for profile image -->
+      <div class="w-full">
+        <label for="profilePic" class="block text-sm font-medium text-gray-700">Profile Picture (Optional)</label>
+        <input 
+          id="profilePic" 
+          type="file" 
+          (change)="onFileChange($event)" 
+          accept="image/*" 
+          class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+        />
+      </div>
+
+      <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Bio (Optional)</mat-label>
+        <textarea matInput formControlName="bio" rows="3"></textarea>
+        <mat-error *ngIf="signupForm.get('bio')?.hasError('maxlength')">
+          Bio cannot exceed 160 characters
+        </mat-error>
+      </mat-form-field>
+
+      <button 
+        mat-raised-button 
+        color="primary" 
+        class="w-full" 
+        type="submit" 
+        [disabled]="signupForm.invalid"
+      >
+        Create Account
+      </button>
+    </form>
+  </div>
+</div>

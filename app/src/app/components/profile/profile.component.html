@@ -1,0 +1,25 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100 text-slate-50">
+    <mat-card class="w-full max-w-md p-6 shadow-lg rounded-xl">
+      <mat-card-title class="text-xl font-semibold text-center">Your Profile</mat-card-title>
+      <mat-card-content class="space-y-4">
+        <div class="flex items-center space-x-4">
+          <img 
+            [src]="user?.profile_image || 'assets/default-avatar.png'" 
+            class="w-16 h-16 rounded-full object-cover" 
+            alt="Profile"
+          >
+          <div>
+            <p class="font-semibold">{{ user?.first_name }} {{ user?.last_name }}</p>
+            <p class="text-gray-600">{{ user?.email }}</p>
+          </div>
+        </div>
+        <p><strong>Phone:</strong> {{ user?.phone || 'Not set' }}</p>
+        <p><strong>Bio:</strong> {{ user?.bio || 'No bio yet' }}</p>
+        <p><strong>Status:</strong> {{ user?.status | titlecase }}</p>
+        <p><strong>Last Seen:</strong> {{ user?.last_seen ? (user.last_seen | date:'short') : 'Never' }}</p>
+      </mat-card-content>
+      <mat-card-actions class="flex justify-end">
+        <button mat-raised-button color="primary" (click)="editProfile()">Edit Profile</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>

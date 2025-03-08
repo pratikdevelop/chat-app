@@ -1,0 +1,24 @@
+<div class="space-y-2">
+    <h3 class="text-lg font-semibold p-2">Users</h3>
+    <div 
+      *ngFor="let user of users" 
+      class="flex items-center p-2 rounded-lg hover:bg-gray-200 cursor-pointer"
+      (click)="userSelected.emit(user)"
+    >
+      <img 
+        [src]="user.profile_image || 'assets/default-avatar.png'" 
+        class="w-8 h-8 rounded-full object-cover" 
+        alt="Profile"
+      >
+      <div class="ml-3 flex-1">
+        <div class="font-medium">{{ user.first_name }} {{ user.last_name }}</div>
+        <div class="text-sm text-gray-500">
+          {{ user.status | titlecase }}
+          <span *ngIf="user.last_seen && user.status !== 'online'">
+            - Last seen: {{ user.last_seen | date:'short' }}
+          </span>
+        </div>
+      </div>
+      <mat-icon *ngIf="user.status === 'online'" class="text-green-500">fiber_manual_record</mat-icon>
+    </div>
+  </div>

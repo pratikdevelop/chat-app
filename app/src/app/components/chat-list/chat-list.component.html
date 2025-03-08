@@ -1,0 +1,104 @@
+<div class="flex flex-col h-full bg-gray-100">
+  <!-- Header -->
+  <div class="p-3 border-b bg-teal-600 text-white flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img 
+        [src]="getOtherMemberProfileImage() || 'assets/default-avatar.png'" 
+        class="w-10 h-10 rounded-full object-cover" 
+        alt="Profile"
+      >
+      <div>
+        <h2 class="text-lg font-semibold">
+          {{ conversation.conversation_type === 'group' ? conversation.name : getOtherMemberName() }}
+        </h2>
+        <span class="text-sm" *ngIf="conversation.conversation_type !== 'group'">
+          {{ getOtherMemberStatus() }}
+        </span>
+      </div>
+    </div>
+    <div class="text-sm" *ngIf="typingUsers.length">
+      {{ getUser(typingUsers) }} typing...
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="flex-1 overflow-y-auto p-4 space-y-2  bg-repeat">
+    <div 
+      *ngFor="let message of messages" 
+      class="flex" 
+      [class.justify-end]="isOwnMessage(message)"
+    >
+      <div 
+        class="max-w-[70%] p-3 rounded-lg shadow-md relative" 
+        [class.bg-green-200]="isOwnMessage(message)" 
+        [class.bg-white]="!isOwnMessage(message)"
+        [class.before:content]="!isOwnMessage(message)"
+        [class.before:absolute]="!isOwnMessage(message)"
+        [class.before:-left-2]="!isOwnMessage(message)"
+        [class.before:top-0]="!isOwnMessage(message)"
+        [class.before:w-0]="!isOwnMessage(message)"
+        [class.before:h-0]="!isOwnMessage(message)"
+        [class.before:border-[8px]]="!isOwnMessage(message)"
+        [class.before:border-transparent]="!isOwnMessage(message)"
+        [class.before:border-r-white]="!isOwnMessage(message)"
+        [class.after:content]="isOwnMessage(message)"
+        [class.after:absolute]="isOwnMessage(message)"
+        [class.after:-right-2]="isOwnMessage(message)"
+        [class.after:top-0]="isOwnMessage(message)"
+        [class.after:w-0]="isOwnMessage(message)"
+        [class.after:h-0]="isOwnMessage(message)"
+        [class.after:border-[8px]]="isOwnMessage(message)"
+        [class.after:border-transparent]="isOwnMessage(message)"
+        [class.after:border-l-green-200]="isOwnMessage(message)"
+      >
+        <p class="font-semibold text-sm text-gray-700" *ngIf="conversation.conversation_type === 'group' && !isOwnMessage(message)">
+          {{ message.sender.first_name }}
+        </p>
+        <p class="text-gray-800" *ngIf="message.message">{{ message.message }}</p>
+        <img 
+          *ngIf="message.file && message.message_type === 'media'" 
+          [src]="message.file" 
+          class="max-w-full rounded-lg mt-1" 
+          alt="Media"
+        >
+        <small class="text-xs text-gray-500 flex items-center justify-end space-x-1 mt-1">
+          <span>{{ message.created_at | date:'shortTime' }}</span>
+          <span *ngIf="isOwnMessage(message)" class="flex items-center">
+            <mat-icon *ngIf="message.is_delivered && !message.is_read" class="text-gray-500" style="font-size: 12px;">done</mat-icon>
+            <mat-icon *ngIf="message.is_read" class="text-blue-500" style="font-size: 12px;">done_all</mat-icon>
+          </span>
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Input -->
+  <form (ngSubmit)="sendMessage()" class="p-2 bg-white border-t flex items-center space-x-2">
+    <button mat-icon-button type="button" (click)="fileInput.click()">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+    <input 
+      #fileInput 
+      type="file" 
+      (change)="onFileChange($event)" 
+      accept="image/*,video/*" 
+      class="hidden"
+    >
+    <input 
+      type="text" 
+      [(ngModel)]="newMessage" 
+      (input)="onTyping()" 
+      [ngModelOptions]="{standalone: true}" 
+      class="flex-1 p-2 border rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500" 
+      placeholder="Type a message..."
+    >
+    <button 
+      mat-icon-button 
+      type="submit" 
+      [disabled]="!newMessage && !selectedFile" 
+      class="text-teal-600"
+    >
+      <mat-icon>send</mat-icon>
+    </button>
+  </form>
+</div>
